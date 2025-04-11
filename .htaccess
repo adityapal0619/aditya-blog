@@ -1,0 +1,50 @@
+# Enable URL rewriting
+RewriteEngine On
+RewriteBase /
+
+# If the request is not for a file or directory
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Route /blog to blog.html
+RewriteRule ^blog/?$ blog.html [L]
+
+# Route /projects to projects.html
+RewriteRule ^projects/?$ projects.html [L]
+
+# Route /about to about.html
+RewriteRule ^about/?$ about.html [L]
+
+# Route /contact to contact.html
+RewriteRule ^contact/?$ contact.html [L]
+
+# Route root to index.html
+RewriteRule ^$ index.html [L]
+
+# Handle 404 errors
+ErrorDocument 404 /404.html
+
+# Prevent directory listing
+Options -Indexes
+
+# Set default character set
+AddDefaultCharset UTF-8
+
+# Enable CORS
+Header set Access-Control-Allow-Origin "*"
+
+# Security headers
+Header set X-Content-Type-Options "nosniff"
+Header set X-Frame-Options "SAMEORIGIN"
+Header set X-XSS-Protection "1; mode=block"
+Header set Referrer-Policy "strict-origin-when-cross-origin"
+
+# Cache control
+<FilesMatch "\.(html|htm|js|css)$">
+    Header set Cache-Control "max-age=86400, public"
+</FilesMatch>
+
+# Compress text files
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/x-javascript application/json
+</IfModule> 
